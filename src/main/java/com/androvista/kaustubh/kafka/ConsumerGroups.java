@@ -9,13 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Properties;
 
-public class Consumer {
+public class ConsumerGroups {
 
-    static Logger logger = LoggerFactory.getLogger(Consumer.class);
+    static Logger logger = LoggerFactory.getLogger(ConsumerGroups.class);
 
     public static void main(String[] args) {
 

@@ -28,7 +28,7 @@ public class ProducerWithKey {
         for (int i = 1; i<200; i++) {
 
             // create record
-            ProducerRecord<String, String> record = new ProducerRecord<>("first_topic", "key_"+i,
+            ProducerRecord<String, String> record = new ProducerRecord<>("first_topic", "key_"+(i%10),
                     "java side key again 0" + i);
 
             // send data
