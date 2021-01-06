@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
-public class Producer {
+public class ProducerWithKey {
 
-    static Logger logger = LoggerFactory.getLogger(Producer.class);
+    static Logger logger = LoggerFactory.getLogger(ProducerWithKey.class);
 
     public static void main(String[] args) {
 
@@ -25,19 +25,24 @@ public class Producer {
         // create producer
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
 
-        // create record
-        ProducerRecord<String, String> record = new ProducerRecord<>("first_topic", "java side again");
+        for (int i = 1; i<200; i++) {
 
-        // send data
-        producer.send(record, (recordMetadata, e) -> {
-            if (e == null) {
-                logger.info("Message received : { topic : " + recordMetadata.topic() + ", " +
-                        "partition : " + recordMetadata.partition() + ", offset : " + recordMetadata.offset() + " }");
-            } else {
-                logger.error("Error occurred", e);
-            }
-        });
+            // create record
+            ProducerRecord<String, String> record = new ProducerRecord<>("first_topic", "key_"+i,
+                    "java side key again 0" + i);
 
+            // send data
+            producer.send(record, (recordMetadata, e) -> {
+                if (e == null) {
+                    logger.info("Message received : { topic : " + recordMetadata.topic() + ", " +
+                            "partition : " + recordMetadata.partition() + ", offset : " + recordMetadata.offset() + ", "
+                            + "key : " + record.key()+" }");
+                } else {
+                    logger.error("Error occurred", e);
+                }
+            });
+
+        }
         producer.flush();
         producer.close();
     }
